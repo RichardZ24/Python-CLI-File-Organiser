@@ -1,5 +1,6 @@
 from pathlib import Path
 import argparse
+import shutil
 
 #python3 main.py ~/test_folder_basic
 
@@ -23,7 +24,19 @@ suffix_dict = {
     ".gz": "Compressed",
     ".tar": "Compressed",
 }
+
+
+# Operations:
+# given a suffix and folder to organise, check if the suffix already has a directory created for it, if it has, return true, else return false
+
+def dir_exists(suffix, folder_to_organise):
+    dir_list = []
+    for item in folder_to_organise.iterdir():
+        if item.is_dir():
+            dir_list.append(item)
     
+
+        
 
 def main():
     print("Python CLI File Organiser!")
@@ -39,6 +52,17 @@ def main():
     if not (folder_to_organise.is_dir()):
         print("ERROR: Provided path is not a valid directory.")
         return
+    
+    for file in folder_to_organise.iterdir():
+        suffix = file.suffix
+        match suffix:
+            case ".jpg":
+                if dir_exists(suffix, folder_to_organise):
+                    shutil.move(file, folder_to_organise / "Images" / file.name)
+                else:
+                    Path(folder_to_organise / "Images").mkdir(exist_ok=True)
+                    shutil.move(file, folder_to_organise / "Images" / file.name)
+
 
     
     
