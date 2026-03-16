@@ -12,19 +12,19 @@ A Python command-line tool built using pathlib, argparse and shutil.
 Python CLI File Organiser/
     fixtures/
         basic_sample/
-        unknown_file_sample
+        unknown_file_sample/
     test_runs/
         basic_test/
         unknown_file_test/
     organise.py
     README.md
-    reset_test_folder.py
+    reset.py
 ```
 
 ## Usage
 ```
-python3 organise.py ~/test_folder_basic
-python3 reset_test_folder.py
+python3 organise.py ~/basic_test
+python3 reset.py
 ```
 
 
@@ -53,7 +53,7 @@ Downloads/
     Images/
         image.png
         image2.jpg
-    Unknown/
+    Others/
         unknown_file_type.kfasdoi
 ```
 ## Future Improvements
