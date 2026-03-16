@@ -37,9 +37,12 @@ suffix_dict = {
 def dir_categorisation(suffix, item, folder_to_organise):
     if ((folder_to_organise / suffix_dict[suffix]).is_dir()):
         shutil.move(item, folder_to_organise / suffix_dict[suffix])
+        print(f"Successfully moved {item} from {folder_to_organise} to {suffix_dict[suffix]}.")
     else:
         Path(folder_to_organise / suffix_dict[suffix]).mkdir()
         shutil.move(item, folder_to_organise / suffix_dict[suffix])
+        print(f"Successfully created {suffix_dict[suffix]} directory and moved {item} from {folder_to_organise} to {suffix_dict[suffix]}")
+
     
 
         
@@ -61,8 +64,12 @@ def main():
     
     for file in folder_to_organise.iterdir():
         suffix = file.suffix
+        if suffix not in suffix_dict:
+            print("ERROR: Unsupported file type.")
+            return
         if not file.is_dir():
             dir_categorisation(suffix, file, folder_to_organise)
+            
 
     
     
