@@ -35,13 +35,24 @@ suffix_dict = {
 # given a suffix and folder to organise, check if the suffix already has a directory created for it, if it has, return true, else return false
 
 def dir_categorisation(suffix, item, folder_to_organise):
+    if suffix not in suffix_dict:
+        if not (Path("Others").is_dir()):
+            Path(folder_to_organise / "Others").mkdir()
+            shutil.move(item, folder_to_organise / "Others")
+            return
+        else:
+            shutil.move(item, folder_to_organise / "Others")
+            return
+
     if ((folder_to_organise / suffix_dict[suffix]).is_dir()):
         shutil.move(item, folder_to_organise / suffix_dict[suffix])
         print(f"Successfully moved {item} from {folder_to_organise} to {suffix_dict[suffix]}.")
+        return
     else:
         Path(folder_to_organise / suffix_dict[suffix]).mkdir()
         shutil.move(item, folder_to_organise / suffix_dict[suffix])
         print(f"Successfully created {suffix_dict[suffix]} directory and moved {item} from {folder_to_organise} to {suffix_dict[suffix]}")
+        return
 
     
 
@@ -64,9 +75,7 @@ def main():
     
     for file in folder_to_organise.iterdir():
         suffix = file.suffix
-        if suffix not in suffix_dict:
-            print("ERROR: Unsupported file type.")
-            return
+        
         if not file.is_dir():
             dir_categorisation(suffix, file, folder_to_organise)
             
