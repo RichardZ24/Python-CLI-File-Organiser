@@ -16,7 +16,7 @@ def reset_test_folder(sample, test):
         shutil.copy(file, Path(test))
 
 def main():
-    reset_test_folder("fixtures/basic_test_sample", "test_runs/basic_test")
+    reset_test_folder("fixtures/basic_sample", "test_runs/basic_test")
     reset_test_folder("fixtures/unknown_file_sample", "test_runs/unknown_file_test")
 
     

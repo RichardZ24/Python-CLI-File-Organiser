@@ -11,17 +11,11 @@ A Python command-line tool built using pathlib, argparse and shutil.
 ```
 Python CLI File Organiser/
     fixtures/
-        sample_test_folder/
-            image.png
-            python_file.py
-            text_file.txt
-            video.mp4
+        basic_sample/
+        unknown_file_sample
     test_runs/
-        test_folder_basic/
-            image.png
-            python_file.py
-            text_file.txt
-            video.mp4
+        basic_test/
+        unknown_file_test/
     organise.py
     README.md
     reset_test_folder.py
