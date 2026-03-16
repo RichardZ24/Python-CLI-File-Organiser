@@ -54,8 +54,6 @@ def dir_categorisation(suffix, item, folder_to_organise):
         print(f"Successfully created {suffix_dict[suffix]} directory and moved {item} from {folder_to_organise} to {suffix_dict[suffix]}")
         return
 
-    
-
         
 
 def main():
