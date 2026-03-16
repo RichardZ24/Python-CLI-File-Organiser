@@ -61,7 +61,7 @@ Downloads/
 - Undo support
 - Duplicate file name handling
 - Recursive directory support
-- Tidier change-log for user
+- Print summary for user
 
 ## Git Development Notes
 - Developed using incremental Git commits following conventional commit messages.
