@@ -46,25 +46,32 @@ SUFFIX_DICT = {
 
 
 # Categorises a file into the respective file type folder. (Creating folder if necessary)
-def file_categorisation(file, folder_to_organise):
+def file_categorisation(file, folder_to_organise, dry_run):
 
     suffix = file.suffix.lower()
+    new_folder = False
 
     if suffix not in SUFFIX_DICT:
-        if not ((folder_to_organise / "Others").is_dir()):
-            (folder_to_organise / "Others").mkdir()
-        shutil.move(file, folder_to_organise / "Others")
-        return "Others"
+        destination = "Others"
+    else:
+        destination = SUFFIX_DICT[suffix]
+        
+    destination_path = folder_to_organise / destination
+
+    if not (destination_path.is_dir()):
+        new_folder = True
+
+    if(dry_run):
+        if (new_folder):
+            print(f"{file.name} -> {destination}/ (new)")
+            return destination
+        print(f"{file.name} -> {destination}/ (new)")
+        return destination
     
-    file_type = SUFFIX_DICT[suffix]
-
-
-    if not ((folder_to_organise / file_type).is_dir()):
-        (folder_to_organise / file_type).mkdir()
-    shutil.move(file, folder_to_organise / file_type)
-
-    return file_type
-
+    if (new_folder):
+        destination_path.mkdir()
+    shutil.move(file, destination_path)
+    return destination
         
 
 def main():
@@ -84,6 +91,7 @@ def main():
 
     parser = argparse.ArgumentParser(description = "Python CLI File Organiser") 
     parser.add_argument("folder", help = "<- folder to organise")
+    parser.add_argument("--dry-run", action = "store_true")
     args = parser.parse_args()
     folder_to_organise = Path(args.folder)
 
@@ -94,8 +102,10 @@ def main():
     
     for file in folder_to_organise.iterdir():
         if file.is_file():
-            file_type_count[file_categorisation(file, folder_to_organise)] += 1
+            file_type_count[file_categorisation(file, folder_to_organise, args.dry_run)] += 1
     
+    if (args.dry_run):
+        return
     
     print("Categorisation Summary: ")
     for file_type in file_type_count:
