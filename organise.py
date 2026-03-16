@@ -44,6 +44,7 @@ SUFFIX_DICT = {
 }
 
 
+
 # Categorises a file into the respective file type folder. (Creating folder if necessary)
 def file_categorisation(file, folder_to_organise):
 
@@ -51,22 +52,34 @@ def file_categorisation(file, folder_to_organise):
 
     if suffix not in SUFFIX_DICT:
         if not ((folder_to_organise / "Others").is_dir()):
-            Path(folder_to_organise / "Others").mkdir()
+            (folder_to_organise / "Others").mkdir()
         shutil.move(file, folder_to_organise / "Others")
-        return
+        return "Others"
     
     file_type = SUFFIX_DICT[suffix]
 
 
     if not ((folder_to_organise / file_type).is_dir()):
-        Path(folder_to_organise / file_type).mkdir()
-
+        (folder_to_organise / file_type).mkdir()
     shutil.move(file, folder_to_organise / file_type)
-    return
+
+    return file_type
 
         
 
 def main():
+
+    file_type_count = {
+        "Images": 0,
+        "Videos": 0,
+        "Audio": 0,
+        "Compressed": 0,
+        "Code": 0,
+        "Documents": 0,
+        "Others": 0
+    }
+
+
     print("Python CLI File Organiser!")
 
     parser = argparse.ArgumentParser(description = "Python CLI File Organiser") 
@@ -80,10 +93,15 @@ def main():
         return
     
     for file in folder_to_organise.iterdir():
-        if not file.is_dir():
-            file_categorisation(file, folder_to_organise)
-            
-
+        if file.is_file():
+            file_type_count[file_categorisation(file, folder_to_organise)] += 1
+    
+    
+    print("Categorisation Summary: ")
+    for file_type in file_type_count:
+        if file_type_count[file_type] == 0:
+            continue
+        print(f"{file_type}: {file_type_count[file_type]}")
     
     
 if __name__ == "__main__":
