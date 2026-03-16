@@ -5,6 +5,7 @@ A Python command-line tool built using pathlib, argparse and shutil.
 - Accepts a path to a directory as a command line argument.
 - Categorises all files in the directory into sub-directories based on the file extension.
 - Creates sub-directories if they do not already exist.
+- Prints a categorisation summary upon completion
 - Has reset script for testing purposes.
 
 ## Layout
@@ -61,7 +62,6 @@ Downloads/
 - Undo support
 - Duplicate file name handling
 - Recursive directory support
-- Print summary for user
 
 ## Git Development Notes
 - Developed using incremental Git commits following conventional commit messages.
