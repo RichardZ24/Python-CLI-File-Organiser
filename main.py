@@ -23,17 +23,23 @@ suffix_dict = {
     ".7z": "Compressed",
     ".gz": "Compressed",
     ".tar": "Compressed",
+    ".py": "Code",
+    ".pdf": "Documents",
+    ".txt": "Documents",
+    ".doc": "Documents",
+    ".docx": "Documents",
 }
 
 
 # Operations:
 # given a suffix and folder to organise, check if the suffix already has a directory created for it, if it has, return true, else return false
 
-def dir_exists(suffix, folder_to_organise):
-    dir_list = []
-    for item in folder_to_organise.iterdir():
-        if item.is_dir():
-            dir_list.append(item)
+def dir_categorisation(suffix, item, folder_to_organise):
+    if ((folder_to_organise / suffix_dict[suffix]).is_dir()):
+        shutil.move(item, folder_to_organise / suffix_dict[suffix])
+    else:
+        Path(folder_to_organise / suffix_dict[suffix]).mkdir()
+        shutil.move(item, folder_to_organise / suffix_dict[suffix])
     
 
         
@@ -55,14 +61,8 @@ def main():
     
     for file in folder_to_organise.iterdir():
         suffix = file.suffix
-        match suffix:
-            case ".jpg":
-                if dir_exists(suffix, folder_to_organise):
-                    shutil.move(file, folder_to_organise / "Images" / file.name)
-                else:
-                    Path(folder_to_organise / "Images").mkdir(exist_ok=True)
-                    shutil.move(file, folder_to_organise / "Images" / file.name)
-
+        if not file.is_dir():
+            dir_categorisation(suffix, file, folder_to_organise)
 
     
     
