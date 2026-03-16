@@ -2,28 +2,41 @@ from pathlib import Path
 import argparse
 import shutil
 
-#python3 main.py ~/test_folder_basic
-
-suffix_dict = {
+SUFFIX_DICT = {
+    # Images
     ".jpeg": "Images",
     ".jpg": "Images",
     ".png": "Images",
     ".gif": "Images",
     ".bmp": "Images",
+
+    # Videos
     ".mp4": "Videos",
     ".mov": "Videos",
     ".avi": "Videos",
     ".mkv": "Videos",
+
+    # Audio
     ".mp3": "Audio",
     ".wav": "Audio",
     ".flac": "Audio",
     ".aac": "Audio",
+
+    # Compressed
     ".zip": "Compressed",
     ".rar": "Compressed",
     ".7z": "Compressed",
     ".gz": "Compressed",
     ".tar": "Compressed",
+
+    # Code
     ".py": "Code",
+    ".c": "Code",
+    ".cpp": "Code",
+    ".js": "Code",
+    ".html": "Code",
+
+    # Documents
     ".pdf": "Documents",
     ".txt": "Documents",
     ".doc": "Documents",
@@ -31,28 +44,25 @@ suffix_dict = {
 }
 
 
-# Operations:
-# given a suffix and folder to organise, check if the suffix already has a directory created for it, if it has, return true, else return false
+# Categorises a file into the respective file type folder. (Creating folder if necessary)
+def file_categorisation(file, folder_to_organise):
 
-def dir_categorisation(suffix, item, folder_to_organise):
-    if suffix not in suffix_dict:
-        if not (Path(folder_to_organise / "Others").is_dir()):
+    suffix = file.suffix.lower()
+
+    if suffix not in SUFFIX_DICT:
+        if not ((folder_to_organise / "Others").is_dir()):
             Path(folder_to_organise / "Others").mkdir()
-            shutil.move(item, folder_to_organise / "Others")
-            return
-        else:
-            shutil.move(item, folder_to_organise / "Others")
-            return
+        shutil.move(file, folder_to_organise / "Others")
+        return
+    
+    file_type = SUFFIX_DICT[suffix]
 
-    if ((folder_to_organise / suffix_dict[suffix]).is_dir()):
-        shutil.move(item, folder_to_organise / suffix_dict[suffix])
-        print(f"Successfully moved {item} from {folder_to_organise} to {suffix_dict[suffix]}.")
-        return
-    else:
-        Path(folder_to_organise / suffix_dict[suffix]).mkdir()
-        shutil.move(item, folder_to_organise / suffix_dict[suffix])
-        print(f"Successfully created {suffix_dict[suffix]} directory and moved {item} from {folder_to_organise} to {suffix_dict[suffix]}")
-        return
+
+    if not ((folder_to_organise / file_type).is_dir()):
+        Path(folder_to_organise / file_type).mkdir()
+
+    shutil.move(file, folder_to_organise / file_type)
+    return
 
         
 
@@ -60,22 +70,18 @@ def main():
     print("Python CLI File Organiser!")
 
     parser = argparse.ArgumentParser(description = "Python CLI File Organiser") 
-
-    #arguments needed
     parser.add_argument("folder", help = "<- folder to organise")
-
     args = parser.parse_args()
     folder_to_organise = Path(args.folder)
+
 
     if not (folder_to_organise.is_dir()):
         print("ERROR: Provided path is not a valid directory.")
         return
     
     for file in folder_to_organise.iterdir():
-        suffix = file.suffix
-        
         if not file.is_dir():
-            dir_categorisation(suffix, file, folder_to_organise)
+            file_categorisation(file, folder_to_organise)
             
 
     
