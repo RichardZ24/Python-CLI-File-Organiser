@@ -36,7 +36,7 @@ suffix_dict = {
 
 def dir_categorisation(suffix, item, folder_to_organise):
     if suffix not in suffix_dict:
-        if not (Path("Others").is_dir()):
+        if not (Path(folder_to_organise / "Others").is_dir()):
             Path(folder_to_organise / "Others").mkdir()
             shutil.move(item, folder_to_organise / "Others")
             return
