@@ -6,7 +6,7 @@ sample_path = "fixtures/"
 test_path = "test_runs/"
 
 # All sample folders.
-sample_folder_list = ["basic", "unknown_file", "existing_folder"]
+sample_folder_list = ["basic", "unknown_file", "existing_folder", "empty", "nested_directory","uppercase_extension", "no_extension"]
 
 
 # Reset a test folder to a given sample folder.
