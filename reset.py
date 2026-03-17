@@ -6,7 +6,7 @@ sample_path = "fixtures/"
 test_path = "test_runs/"
 
 # All sample folders.
-sample_folder_list = ["basic", "unknown_file"]
+sample_folder_list = ["basic", "unknown_file", "existing_folder"]
 
 
 # Reset a test folder to a given sample folder.
@@ -20,7 +20,15 @@ def reset_test(sample, test):
         else:
             file.unlink()
     for file in Path(sample).iterdir():
-        shutil.copy(file, Path(test))
+        if (file.is_file()):
+            shutil.copy2(file, Path(test))
+        elif (file.is_dir()):
+            shutil.copytree(file, Path(test) / file.name)
+        else:
+            print("ERROR")
+            return
+
+        
 
 
 def main():

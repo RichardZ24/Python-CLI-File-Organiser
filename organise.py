@@ -65,7 +65,7 @@ def file_categorisation(file, folder_to_organise, dry_run):
         if (new_folder):
             print(f"{file.name} -> {destination}/ (new)")
             return destination
-        print(f"{file.name} -> {destination}/ (new)")
+        print(f"{file.name} -> {destination}")
         return destination
     
     if (new_folder):
