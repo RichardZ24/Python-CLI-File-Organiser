@@ -5,6 +5,7 @@ A Python command-line tool built using pathlib, argparse and shutil.
 - Accepts a path to a directory as a command line argument.
 - Categorises all files in the directory into sub-directories based on the file extension.
 - Creates sub-directories if they do not already exist.
+- Can preview file structure with a flag
 - Prints a categorisation summary upon completion
 - Has reset script for testing purposes.
 
@@ -25,6 +26,7 @@ Python CLI File Organiser/
 ## Usage
 ```
 python3 organise.py ~/basic_test
+python3 organise.py ~/basic_test --dry-run
 python3 reset.py
 ```
 
@@ -58,7 +60,6 @@ Downloads/
         unknown_file_type.kfasdoi
 ```
 ## Future Improvements
-- Dry run mode
 - Undo support
 - Duplicate file name handling
 - Recursive directory support
